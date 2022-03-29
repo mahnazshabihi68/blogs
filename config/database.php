@@ -63,6 +63,18 @@ return [
             ]) : [],
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', 27017),
+            'database' => env('blog'),
+            'username' => env('root'),
+            'password' => env(''),
+            'options' => [
+                'database' => env('DB_DATABASE'), // required with Mongo 3+
+            ],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
