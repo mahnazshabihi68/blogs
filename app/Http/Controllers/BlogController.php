@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BlogRequest;
 use App\Services\BlogService;
+use App\Traits\ApiResponses;
 use Exception;
 use Illuminate\Http\Request;
 use Throwable;
 
 class BlogController extends Controller
 {
+    use ApiResponses;
+
     public function __construct(BlogService $blogService)
     {
         $this->blogService = $blogService;
@@ -23,14 +26,7 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        try {
-            $blog = $this->blogService->getById($id);
-            if(is_object($blog)) $result = ['status' => 200, 'data' => $blog];
-        } catch (Exception $e) {
-            $result = ['status' => 500, 'message' => $e->getMessage()];
-        }
-
-        return $result;
+        return $this->blogService->getById($id);
     }
 
     public function create(BlogRequest $request)
@@ -42,22 +38,34 @@ class BlogController extends Controller
     public function update($id, Request $request)
     {
         $input = $request->all();
-        return $this->blogService->update($id, $input);
+
+        try {
+            $this->blogService->update($id, $input);
+            $result = $this->successResponse(null, 'success', 200);
+        } catch (Throwable $e) {
+            $result = [
+                'status'    => 500,
+                'error'     => $e->getMessage()
+            ];
+        }
+
+        return $result;
     }
 
     public function delete($id)
     {
-        $result = ['status' => 200];
-
         try {
-            $result['data'] = $this->blogService->delete($id);
-        } catch(Throwable $e){
+            $result = [
+                'data' =>  $this->blogService->delete($id),
+                'status' => 200
+            ];
+        } catch (Throwable $e) {
             $result = [
                 'status'    => 500,
-                'error'     => $e->getMessage()      
+                'error'     => $e->getMessage()
             ];
         }
-        
+
         return $result;
     }
 }
