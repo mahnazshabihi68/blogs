@@ -31,19 +31,18 @@ class BlogRepository implements BlogRepositoryInterface
     {
         $blog = $this->blog::where('_id', $id)->first();
 
-        $blog::where('_id', $id)->update([
+        $result = $blog::where('_id', $id)->update([
             'title'         => $request['title'],
-            'description'   => $request['description'],
-            'updated_at'    => now()
+            'description'   => $request['description']
         ]);
 
-        return $blog;
+        return $result;
     }
 
     public function deleteBlog($id)   
     {
         $blog = $this->blog::where('_id', $id)->first();
-
+        
         $blog->delete();
 
         return $blog;

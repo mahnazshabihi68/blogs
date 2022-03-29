@@ -24,7 +24,9 @@ class BlogService
 
     public function getById($id)
     {
-        return $this->blogRepository->getBlog($id);
+        $blog = $this->blogRepository->getBlog($id);
+       
+        return $blog;
     }
 
     public function create(array $request)
@@ -37,8 +39,13 @@ class BlogService
         try {
             $blog = $this->blogRepository->updateBlog($id, $request);
         } catch (Exception $e) {
-            echo $e;
+            DB::rollBack();
+            Log::info($e->getMessage());
+
+            throw new InvalidArgumentException('Unable to update');
         }
+
+        DB::commit();
 
         return $blog;
     }
