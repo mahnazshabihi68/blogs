@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\BlogRepositoryInterface;
 use App\Models\Blog;
 
-class BlogRepository
+class BlogRepository implements BlogRepositoryInterface
 {
     public function __construct(Blog $blog)
     {
@@ -39,7 +40,7 @@ class BlogRepository
         return $blog;
     }
 
-    public function deleteBlog($id)
+    public function deleteBlog($id)   
     {
         $blog = $this->blog::where('_id', $id)->first();
 
