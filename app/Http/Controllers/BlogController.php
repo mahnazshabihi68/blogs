@@ -6,6 +6,7 @@ use App\Http\Requests\BlogRequest;
 use App\Services\BlogService;
 use Exception;
 use Illuminate\Http\Request;
+use Throwable;
 
 class BlogController extends Controller
 {
@@ -16,12 +17,20 @@ class BlogController extends Controller
 
     public function index()
     {
-       return $this->blogService->getAll();
+        $blogs = $this->blogService->getAll();
+        return $blogs;
     }
 
     public function show($id)
     {
-        return $this->blogService->getById($id);
+        try {
+            $blog = $this->blogService->getById($id);
+            if(is_object($blog)) $result = ['status' => 200, 'data' => $blog];
+        } catch (Exception $e) {
+            $result = ['status' => 500, 'message' => $e->getMessage()];
+        }
+
+        return $result;
     }
 
     public function create(BlogRequest $request)
@@ -38,6 +47,17 @@ class BlogController extends Controller
 
     public function delete($id)
     {
-        return $this->blogService->delete($id);
+        $result = ['status' => 200];
+
+        try {
+            $result['data'] = $this->blogService->delete($id);
+        } catch(Throwable $e){
+            $result = [
+                'status'    => 500,
+                'error'     => $e->getMessage()      
+            ];
+        }
+        
+        return $result;
     }
 }

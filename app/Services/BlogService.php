@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\BlogRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
 class BlogService
@@ -33,13 +34,30 @@ class BlogService
 
     public function update($id, array $request)
     {
-        $blog = $this->blogRepository->updateBlog($id, $request);
+        try {
+            $blog = $this->blogRepository->updateBlog($id, $request);
+        } catch (Exception $e) {
+            echo $e;
+        }
 
         return $blog;
     }
 
     public function delete($id)
     {
-        return $this->blogRepository->deleteBlog($id);
+        DB::beginTransaction();
+
+        try {
+            $blog = $this->blogRepository->deleteBlog($id);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+
+            throw new InvalidArgumentException('Unable to delete');
+        }
+
+        DB::commit();
+
+        return $blog;
     }
 }
