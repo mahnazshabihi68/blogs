@@ -167,7 +167,6 @@ return [
         /*
          * Package Service Providers...
          */
-        App\Providers\BlogRepositoryProvider::class,
 
         /*
          * Application Service Providers...

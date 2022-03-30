@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface BlogRepositoryInterface
+interface IBlogRepository
 {
     public function getAllBlogs();
     public function getBlog(object $id);

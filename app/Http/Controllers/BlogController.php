@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BlogRequest;
 use App\Services\BlogService;
-use App\Traits\ApiResponses;
-use Exception;
+use App\DTO\ApiResponses;
 use Illuminate\Http\Request;
-use Throwable;
 
 class BlogController extends Controller
 {
-    use ApiResponses;
-
     public function __construct(BlogService $blogService)
     {
         $this->blogService = $blogService;
@@ -26,7 +22,9 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        return $this->blogService->getById($id);
+        $result = $this->blogService->getById($id);
+
+        return isset($result['status']) ? ApiResponses::errorResponse('error', $result['status']) : ApiResponses::successResponse($result, 'success', 200);
     }
 
     public function create(BlogRequest $request)
@@ -39,33 +37,14 @@ class BlogController extends Controller
     {
         $input = $request->all();
 
-        try {
-            $this->blogService->update($id, $input);
-            $result = $this->successResponse(null, 'success', 200);
-        } catch (Throwable $e) {
-            $result = [
-                'status'    => 500,
-                'error'     => $e->getMessage()
-            ];
-        }
-
-        return $result;
+        $result = $this->blogService->update($id, $input);
+        return $result['status'] == 200 ? ApiResponses::successResponse(null, 'success', $result['status']) : ApiResponses::errorResponse('error', $result['status']);
     }
 
     public function delete($id)
     {
-        try {
-            $result = [
-                'data' =>  $this->blogService->delete($id),
-                'status' => 200
-            ];
-        } catch (Throwable $e) {
-            $result = [
-                'status'    => 500,
-                'error'     => $e->getMessage()
-            ];
-        }
+        $result = $this->blogService->delete($id);
 
-        return $result;
+        return $result['status'] == 200 ? ApiResponses::successResponse(null, 'success', $result['status']) : ApiResponses::errorResponse('error', $result['status']);
     }
 }
