@@ -19,7 +19,7 @@ class BlogRepository implements IBlogRepository
 
     public function getBlog($id)
     {
-        $blog = $this->blog::where('id', $id)->first();
+        $blog = $this->blog::where('_id', $id)->first();
         if (!$blog) return ['status' => 404];
 
         return $blog;
@@ -32,10 +32,10 @@ class BlogRepository implements IBlogRepository
 
     public function updateBlog($id, array $request)
     {
-        $blog = $this->blog::where('id', $id)->first();
+        $blog = $this->blog::where('_id', $id)->first();
         if (!$blog) return ['status' => 404];
 
-        $blog::where('id', $id)->update([
+        $blog::where('_id', $id)->update([
             'title'         => $request['title'],
             'description'   => $request['description']
         ]);
@@ -45,7 +45,7 @@ class BlogRepository implements IBlogRepository
 
     public function deleteBlog($id)
     {
-        $blog = $this->blog::where('id', $id)->first();
+        $blog = $this->blog::where('_id', $id)->first();
         if (!$blog) return ['status' => 404];
 
         $blog->delete();
