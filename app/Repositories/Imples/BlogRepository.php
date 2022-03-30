@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Imples;
 
-use App\Interfaces\IBlogRepository;
+use App\Repositories\Interfaces\IBlogRepository;
 use App\Models\Blog;
 
 class BlogRepository implements IBlogRepository
@@ -20,7 +20,6 @@ class BlogRepository implements IBlogRepository
     public function getBlog($id)
     {
         $blog = $this->blog::where('_id', $id)->first();
-        if (!$blog) return ['status' => 404];
 
         return $blog;
     }
@@ -33,23 +32,23 @@ class BlogRepository implements IBlogRepository
     public function updateBlog($id, array $request)
     {
         $blog = $this->blog::where('_id', $id)->first();
-        if (!$blog) return ['status' => 404];
 
-        $blog::where('_id', $id)->update([
-            'title'         => $request['title'],
-            'description'   => $request['description']
-        ]);
+        if ($blog)
+            $blog = $blog::where('_id', $id)->update([
+                'title'         => $request['title'],
+                'description'   => $request['description']
+            ]);
 
-        return ['status' => 200];
+        return $blog;
     }
 
     public function deleteBlog($id)
     {
         $blog = $this->blog::where('_id', $id)->first();
-        if (!$blog) return ['status' => 404];
 
-        $blog->delete();
+        if ($blog) $blog->delete();
 
-        return ['status' => 200];
+        return $blog;
     }
 }
+

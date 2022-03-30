@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces;
+namespace App\Repositories\Interfaces;
 
 interface IBlogRepository
 {
@@ -10,3 +10,4 @@ interface IBlogRepository
     public function updateBlog(object $id, array $request);
     public function deleteBlog(object $id);
 }
+
