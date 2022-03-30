@@ -48,3 +48,4 @@ class BlogService implements IBlogService
         return ['status' => 200];
     }
 }
+

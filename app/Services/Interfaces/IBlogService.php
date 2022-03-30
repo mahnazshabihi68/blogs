@@ -10,3 +10,4 @@ interface IBlogService
     public function update(object $id, array $request);
     public function delete(object $id);
 }
+

@@ -51,3 +51,4 @@ class BlogRepository implements IBlogRepository
         return $blog;
     }
 }
+
