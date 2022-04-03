@@ -2,6 +2,7 @@
 
 namespace App\Services\Imples;
 
+use App\Events\BlogEvent;
 use App\Repositories\Interfaces\IBlogRepository;
 use App\Services\Interfaces\IBlogService;
 
@@ -36,6 +37,7 @@ class BlogService implements IBlogService
     {
         $blog = $this->iblogRepository->updateBlog($id, $request);
         if (!$blog) return ['status' => 404];
+        event(new BlogEvent('blog updated'));
 
         return ['status' => 200];
     }
@@ -44,6 +46,7 @@ class BlogService implements IBlogService
     {
         $blog = $this->iblogRepository->deleteBlog($id);
         if (!$blog) return ['status' => 404];
+        event(new BlogEvent('blog deleted'));
 
         return ['status' => 200];
     }
