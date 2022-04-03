@@ -30,6 +30,8 @@ class BlogService implements IBlogService
 
     public function create(array $request)
     {
+        event(new BlogEvent('blog created'));
+        
         return $this->iblogRepository->createBlog($request);
     }
 
@@ -37,6 +39,7 @@ class BlogService implements IBlogService
     {
         $blog = $this->iblogRepository->updateBlog($id, $request);
         if (!$blog) return ['status' => 404];
+        
         event(new BlogEvent('blog updated'));
 
         return ['status' => 200];

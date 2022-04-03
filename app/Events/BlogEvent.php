@@ -10,10 +10,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class BlogEvent
+class BlogEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    protected $message;
+    public $message;
     /**
      * Create a new event instance.
      *
@@ -21,7 +21,7 @@ class BlogEvent
      */
     public function __construct($message)
     {
-        $this->$message = $message;
+        return $this->message;
     }
 
     /**
