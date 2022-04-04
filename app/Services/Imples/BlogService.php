@@ -3,6 +3,7 @@
 namespace App\Services\Imples;
 
 use App\Events\BlogEvent;
+use App\Events\SendMessage;
 use App\Repositories\Interfaces\IBlogRepository;
 use App\Services\Interfaces\IBlogService;
 
@@ -30,7 +31,7 @@ class BlogService implements IBlogService
 
     public function create(array $request)
     {
-        event(new BlogEvent('blog created'));
+        event(new SendMessage('blog created'));
         
         return $this->iblogRepository->createBlog($request);
     }
@@ -40,7 +41,7 @@ class BlogService implements IBlogService
         $blog = $this->iblogRepository->updateBlog($id, $request);
         if (!$blog) return ['status' => 404];
         
-        event(new BlogEvent('blog updated'));
+        event(new SendMessage('blog updated'));
 
         return ['status' => 200];
     }
@@ -49,7 +50,8 @@ class BlogService implements IBlogService
     {
         $blog = $this->iblogRepository->deleteBlog($id);
         if (!$blog) return ['status' => 404];
-        event(new BlogEvent('blog deleted'));
+
+        event(new SendMessage('blog deleted'));
 
         return ['status' => 200];
     }
