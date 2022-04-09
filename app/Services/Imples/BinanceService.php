@@ -2,7 +2,7 @@
 
 namespace App\Services\Imples;
 
-use App\Jobs\BinnaceData;
+use App\Jobs\BinanceJob;
 use App\Repositories\Interfaces\IBinanceRepository;
 use App\Services\Interfaces\IBinanceService;
 use App\Services\Socket\SocketService;
@@ -23,7 +23,6 @@ class BinanceService extends SocketService implements IBinanceService
 
     public function save($data)
     {
-        dispatch(new BinnaceData($data));
-        dd('finished');
+        dispatch(new BinanceJob($data));
     }
 }
