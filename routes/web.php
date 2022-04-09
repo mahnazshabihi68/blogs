@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/abc', function () {
-    BinanceJob::dispatch(22);
+    // BinanceJob::dispatch(22);
     Blog::create(['name' => 'mahna']);
     // Redis::set('name', 'farzane', 'EX', 10);
     dd(11);

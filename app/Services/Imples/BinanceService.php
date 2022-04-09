@@ -23,6 +23,6 @@ class BinanceService extends SocketService implements IBinanceService
 
     public function save($data)
     {
-        dispatch(new BinanceJob($data));
+        $this->iBinanceRepository->savePrice($data);
     }
 }

@@ -38,9 +38,8 @@ class RedisSubscribe extends Command
     public function handle()
     {
         Redis::subscribe(['test-channel'], function ($response) {
-            error_log($response . 2);
-
-            $this->iBinanceService->save($response);
+            $value = json_decode($response);
+            $this->iBinanceService->save($value);
         });
     }
 }
