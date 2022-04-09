@@ -5,18 +5,21 @@ namespace App\Repositories\Imples;
 use App\Repositories\Interfaces\IBinanceRepository;
 use App\Services\Socket\ISocketService;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class BinanceRepository implements IBinanceRepository
 {
     public function getPrice()
     {
-        dd(444444444);
+        //
     }
 
-    public function savePrice()
+    public function savePrice($data)
     {
-        dd(11);
-
-        dd(Cache::get('prices'));
+        foreach ($data as $key => $value) {
+            Redis::publish('test-channel', json_encode([
+                'data' => $value
+            ]));
+        }
     }
 }
