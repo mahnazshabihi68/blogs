@@ -33,17 +33,14 @@ class BinanceJob implements ShouldQueue
      */
     public function handle()
     {
-        error_log(324324);
         Order::create([
-            'u' => $this->data->u,
-            's' => $this->data->s,
-            'b' => $this->data->b,
-            'B' => $this->data->B,
-            'a' => $this->data->a,
-            'A' => $this->data->A
+            'u' => $this->order->u,
+            's' => $this->order->s,
+            'b' => $this->order->b,
+            'B' => $this->order->B,
+            'a' => $this->order->a,
+            'A' => $this->order->A
         ]);
-      
 
-        
     }
 }
