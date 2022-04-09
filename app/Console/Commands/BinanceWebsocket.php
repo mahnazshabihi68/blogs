@@ -33,10 +33,9 @@ class BinanceWebsocket extends Command
         while (true) {
             try {
                 $result = $client->receive();
-                error_log($result . 1);
 
                 Redis::publish('test-channel', json_encode([
-                    'data' => $result
+                    'data' => ($result)
                 ]));
                 
             } catch (\WebSocket\ConnectionException $e) {
