@@ -4,11 +4,18 @@ namespace App\Console\Commands;
 
 use App\Models\Blog;
 use App\Models\Order;
+use App\Services\Interfaces\IBinanceService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
  
 class RedisSubscribe extends Command
 {
+    public function __construct(IBinanceService $iBinanceService)
+    {
+        parent::__construct();
+        $this->iBinanceService = $iBinanceService;
+    }
+
     /**
      * The name and signature of the console command.
      *
@@ -30,12 +37,8 @@ class RedisSubscribe extends Command
      */
     public function handle()
     {
-        Redis::subscribe(['test-channel'], function ($message) {
-            // $message = json_decode($message);
-            error_log($message);
-            Order::create([
-                'message' => $message,
-            ]);
+        Redis::subscribe(['test-channel'], function ($response) {
+            $this->iBinanceService->getPrice($response);
         });
     }
 }

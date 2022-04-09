@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BinanceController;
+use App\Jobs\BinnaceData;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
@@ -18,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/abc', function () {
+    BinnaceData::dispatch();
+Blog::create(['name' => 'mahna']);
     // Redis::set('name', 'farzane', 'EX', 10);
-    dd(Redis::get('name'));
+    dd(11);
 });
 
 Route::get('/create', [BinanceController::class, 'create']);

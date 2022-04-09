@@ -43,18 +43,6 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'mongodb' => [
-            'driver' => 'mongodb',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', 27017),
-            'database' => env('test888'),
-            'username' => env('root'),
-            'password' => env(''),
-            'options' => [
-                'database' => env('DB_DATABASE'), // required with Mongo 3+
-            ],
-        ],
-
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
