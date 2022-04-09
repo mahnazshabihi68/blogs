@@ -2,11 +2,7 @@
 
 namespace App\Services\Socket;
 
-use App\Models\Blog;
-use App\Models\User;
-use App\Services\Interfaces\IBinanceService;
 use App\Services\Socket\ISocketService;
-use Illuminate\Support\Facades\Redis;
 use WebSocket\Client;
 
 class SocketService implements ISocketService

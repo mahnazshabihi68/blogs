@@ -2,7 +2,6 @@
 
 namespace App\Services\Imples;
 
-use App\Events\BlogEvent;
 use App\Events\SendMessage;
 use App\Repositories\Interfaces\IBlogRepository;
 use App\Services\Interfaces\IBlogService;

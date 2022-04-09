@@ -3,11 +3,7 @@
 namespace App\Repositories\Imples;
 
 use App\Jobs\BinanceJob;
-use App\Models\Order;
 use App\Repositories\Interfaces\IBinanceRepository;
-use App\Services\Socket\ISocketService;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
 
 class BinanceRepository implements IBinanceRepository
 {
@@ -16,9 +12,9 @@ class BinanceRepository implements IBinanceRepository
         //
     }
 
-    public function savePrice($data)
+    public function savePrice($input)
     {
-        $result = json_decode($data->data);
+        $result = json_decode($input->data);
         BinanceJob::dispatch($result);
     }
 }
