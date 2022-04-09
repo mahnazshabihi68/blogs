@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\BinanceController;
+use App\Models\Blog;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,11 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/abc', function () {
+    // Redis::set('name', 'farzane', 'EX', 10);
+    dd(Redis::get('name'));
 });
 
+Route::get('/create', [BinanceController::class, 'create']);
+
+
+Route::get('/binance', [BinanceController::class, 'getAll']);
+
 Route::get('/send', function () {
-    event(new \App\Events\SendMessage());
+    event(new \App\Events\SendMessage('3'));
     return view('welcome');
 });
