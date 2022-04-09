@@ -1,13 +1,11 @@
 <?php
- 
+
 namespace App\Console\Commands;
 
-use App\Models\Blog;
-use App\Models\Order;
 use App\Services\Interfaces\IBinanceService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
- 
+
 class RedisSubscribe extends Command
 {
     public function __construct(IBinanceService $iBinanceService)
@@ -22,14 +20,14 @@ class RedisSubscribe extends Command
      * @var string
      */
     protected $signature = 'redis:subscribe';
- 
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Subscribe to a Redis channel';
- 
+
     /**
      * Execute the console command.
      *
