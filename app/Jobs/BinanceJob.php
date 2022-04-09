@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class BinnaceData implements ShouldQueue
+class BinanceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -19,9 +19,9 @@ class BinnaceData implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        dd(222);
+        //
     }
 
     /**
@@ -32,6 +32,5 @@ class BinnaceData implements ShouldQueue
     public function handle()
     {
         Blog::create(['name' => 'mahnaz']);
-
     }
 }
