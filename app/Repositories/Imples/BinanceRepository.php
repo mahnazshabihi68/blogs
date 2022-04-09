@@ -19,9 +19,6 @@ class BinanceRepository implements IBinanceRepository
     public function savePrice($data)
     {
         $result = json_decode($data->data);
-
         BinanceJob::dispatch($result);
-
-
     }
 }
