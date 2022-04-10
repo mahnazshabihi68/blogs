@@ -5,6 +5,7 @@ namespace App\Services\Imples;
 use App\Repositories\Interfaces\IBinanceRepository;
 use App\Services\Interfaces\IBinanceService;
 use App\Services\Socket\SocketService;
+use Illuminate\Support\Facades\Cache;
 
 class BinanceService extends SocketService implements IBinanceService
 {
@@ -17,7 +18,9 @@ class BinanceService extends SocketService implements IBinanceService
 
     public function getPrice()
     {
-        //
+        return Cache::remember('orders', config('orders_update'), function () {
+            return $this->iBinanceRepository->getPrice();
+        });
     }
 
     public function save($input)
