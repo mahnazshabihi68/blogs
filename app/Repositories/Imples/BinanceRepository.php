@@ -10,12 +10,20 @@ class BinanceRepository implements IBinanceRepository
 {
     public function getPrice()
     {
-        Order::all();
+        return Order::all();
     }
 
     public function savePrice($input)
     {
         $result = json_decode($input->data);
-        BinanceJob::dispatch($result);
+        Order::create([
+            'u' => $result->u,
+            's' => $result->s,
+            'b' => $result->b,
+            'B' => $result->B,
+            'a' => $result->a,
+            'A' => $result->A
+        ]);
+//        BinanceJob::dispatch($result);
     }
 }

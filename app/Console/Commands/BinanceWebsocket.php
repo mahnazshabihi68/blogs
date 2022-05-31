@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\OrderBookEvent;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 use WebSocket\Client;
@@ -29,7 +30,7 @@ class BinanceWebsocket extends Command
      */
     public function handle()
     {
-        $client = new Client("wss://stream.binance.com:9443/ws/bnbbtc@bookTicker");
+        $client = new Client("wss://stream.binance.com:9443/ws/btcusdt@bookTicker");
         while (true) {
             try {
                 $result = $client->receive();
@@ -37,10 +38,10 @@ class BinanceWebsocket extends Command
                 Redis::publish('test-channel', json_encode([
                     'data' => ($result)
                 ]));
-
             } catch (\WebSocket\ConnectionException $e) {
                 echo $e;
             }
+            sleep(10);
         }
 
         $client->close();

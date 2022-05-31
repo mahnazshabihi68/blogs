@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 
-class BinanceController extends Controller 
+class BinanceController extends Controller
 {
     protected $iBinanceService;
 
@@ -20,7 +20,7 @@ class BinanceController extends Controller
     public function getAll()
     {
         $prices = $this->iBinanceService->getPrice();
-        dd(Cache::get('prices'));
+        return $prices;
     }
 
     public function create()
