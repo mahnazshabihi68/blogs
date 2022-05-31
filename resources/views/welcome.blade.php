@@ -13,23 +13,40 @@
     <body>
         <div class="container">
             <h1>Laravel Broadcast Redis Socket io Tutorial - ItSolutionStuff.com</h1>
-            
+
             <div id="notification"></div>
         </div>
     </body>
-  
+
     <script>
             window.laravel_echo_port='{{env("LARAVEL_ECHO_PORT")}}';
-    </script>   
+    </script>
     <script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script>
     <script src="{{ url('js/laravel-echo-setup.js') }}" type="text/javascript"></script>
-      
-    <script type="text/javascript">
-        var i = 0;
-        window.Echo.channel('user-channel')
-         .listen('.UserEvent', (data) => {
-            i++;
-            $("#notification").append('<div class="alert alert-success">'+i+'.'+data.title+'</div>');
+
+{{--    <script type="text/javascript">--}}
+{{--        var i = 0;--}}
+{{--        window.Echo.channel('user-channel')--}}
+{{--         .listen('.UserEvent', (data) => {--}}
+{{--            i++;--}}
+{{--            $("#notification").append('<div class="alert alert-success">'+i+'.'+data.title+'</div>');--}}
+{{--        });--}}
+{{--    </script>--}}
+    <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
+    <script>
+        var pusher = new Pusher("416bcca166d0f6c46dd9", {
+            cluster: "ap1",
         });
+        var channel = pusher.subscribe("order-book");
+        var callback = (eventName, data) => {
+            console.log(1);
+            console.log(
+                `bind global channel: The event ${eventName} was triggered with data ${JSON.stringify(
+                    data
+                )}`
+            );
+        };
+        // bind to all events on the channel
+        channel.bind_global(callback);
     </script>
 </html>

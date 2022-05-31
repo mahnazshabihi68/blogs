@@ -33,6 +33,6 @@ Route::get('/create', [BinanceController::class, 'create']);
 Route::get('/binance', [BinanceController::class, 'getAll']);
 
 Route::get('/send', function () {
-    event(new \App\Events\SendMessage('3'));
+//    event(new \App\Events\SendMessage('3'));
     return view('welcome');
 });
