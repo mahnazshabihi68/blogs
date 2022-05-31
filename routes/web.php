@@ -1,12 +1,7 @@
 <?php
 
 use App\Http\Controllers\BinanceController;
-use App\Jobs\BinanceJob;
-use App\Jobs\BinnaceData;
-use App\Jobs\Test;
 use App\Models\Blog;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,3 +31,4 @@ Route::get('/send', function () {
 //    event(new \App\Events\SendMessage('3'));
     return view('welcome');
 });
+

@@ -34,8 +34,7 @@ class marketUpdate extends Command
     {
         while (true) {
             $result = Order::latest()->first();
-//            dd($result);
-            OrderBookEvent::dispatch($result);
+            OrderBookEvent::dispatch($result);;
             sleep(10);
         }
     }
